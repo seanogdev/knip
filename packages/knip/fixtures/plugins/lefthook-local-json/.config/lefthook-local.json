@@ -1,0 +1,10 @@
+{
+  "pre-push": {
+    "commands": {
+      "lint": {
+        "glob": "*.{ts,tsx}",
+        "run": "npx eslint {files}"
+      }
+    }
+  }
+}

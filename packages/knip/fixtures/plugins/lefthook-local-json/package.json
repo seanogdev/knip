@@ -1,0 +1,7 @@
+{
+  "name": "@plugins/lefthook-local-json",
+  "scripts": {},
+  "devDependencies": {
+    "lefthook": "*"
+  }
+}
