@@ -11,7 +11,11 @@ const title = 'Lefthook';
 
 const enablers = ['lefthook', '@arkweid/lefthook', '@evilmartians/lefthook'];
 const configExtensions = new Set(['.yml', '.yaml', '.json', '.jsonc', '.toml']);
-const lefthookConfigPattern = '{,.config/,.}lefthook{,-local}.{yml,yaml,json,jsonc,toml}';
+const lefthookConfig = [
+  'lefthook{,-local}.{yml,yaml,json,jsonc,toml}',
+  '.lefthook{,-local}.{yml,yaml,json,jsonc,toml}',
+  '.config/lefthook{,-local}.{yml,yaml,json,jsonc,toml}',
+];
 
 const isEnabled: IsPluginEnabled = ({ dependencies }) => hasDependency(dependencies, enablers);
 
@@ -54,7 +58,7 @@ const plugin: Plugin = {
   title,
   enablers,
   isEnabled,
-  config: options => [lefthookConfigPattern, ...getGitHookPaths('.git/hooks', true, options.cwd)],
+  config: options => [...lefthookConfig, ...getGitHookPaths('.git/hooks', true, options.cwd)],
   resolveConfig,
 };
 

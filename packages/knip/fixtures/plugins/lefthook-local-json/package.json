@@ -1,6 +1,0 @@
-{
-  "name": "@plugins/lefthook-local-json",
-  "devDependencies": {
-    "@evilmartians/lefthook": "*"
-  }
-}
