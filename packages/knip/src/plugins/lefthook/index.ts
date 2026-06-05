@@ -10,6 +10,8 @@ import { hasDependency } from '../../util/plugin.ts';
 const title = 'Lefthook';
 
 const enablers = ['lefthook', '@arkweid/lefthook', '@evilmartians/lefthook'];
+const configExtensions = new Set(['.yml', '.yaml', '.json', '.jsonc', '.toml']);
+const lefthookConfigPattern = '{,.config/,.}lefthook{,-local}.{yml,yaml,json,jsonc,toml}';
 
 const isEnabled: IsPluginEnabled = ({ dependencies }) => hasDependency(dependencies, enablers);
 
@@ -25,7 +27,7 @@ const resolveConfig: ResolveConfig = async (localConfig, options) => {
 
   const inputs = manifest.devDependencies ? Object.keys(manifest.devDependencies).map(id => toDependency(id)) : [];
 
-  if (extname(configFileName) === '.yml') {
+  if (configExtensions.has(extname(configFileName))) {
     const scripts = findByKeyDeep<Command>(localConfig, 'run').flatMap(command => {
       const deps = getInputsFromScripts([command.run], { ...options, knownBinsOnly: true });
       const dir = command.root ?? cwd;
@@ -52,7 +54,7 @@ const plugin: Plugin = {
   title,
   enablers,
   isEnabled,
-  config: options => ['lefthook.yml', ...getGitHookPaths('.git/hooks', true, options.cwd)],
+  config: options => [lefthookConfigPattern, ...getGitHookPaths('.git/hooks', true, options.cwd)],
   resolveConfig,
 };
 

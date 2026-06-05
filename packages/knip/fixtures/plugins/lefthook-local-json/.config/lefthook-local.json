@@ -1,0 +1,9 @@
+{
+  "pre-push": {
+    "commands": {
+      "eslint": {
+        "run": "npx eslint {files}"
+      }
+    }
+  }
+}
